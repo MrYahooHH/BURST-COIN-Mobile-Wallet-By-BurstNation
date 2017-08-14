@@ -43,7 +43,11 @@ namespace BNWallet
 
             BurstAddress.Text = burstAddress;
             WalletName.Text = walletName;
-            BurstBalance.Text = balance.Substring(0,balance.Length -8)+"." + balance.Substring(balance.Length -8);
+            BurstBalance.Text = balance;
+            double burstdbl = Convert.ToDouble(BurstBalance.Text);
+            burstdbl = burstdbl / 100000000;
+            BurstBalance.Text = burstdbl.ToString("#,0.00000000");
+            
 
             btnSendBurst = FindViewById<Button>(Resource.Id.btnSendBurst);
             btnSendBurst.Click += delegate

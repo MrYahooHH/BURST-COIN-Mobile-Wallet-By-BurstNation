@@ -31,6 +31,8 @@ namespace BNWallet
         Button buttonCancelScan;
         Button CreateQRCode;
         string burstAddress;
+        string amount;
+        string fee;
         
 
 
@@ -56,6 +58,8 @@ namespace BNWallet
             PassPhrase = FindViewById<EditText>(Resource.Id.sendPassphrase);
             CreateQRCode = FindViewById<Button>(Resource.Id.btnViewQRCode);
 
+            
+
 
             PassPhrase.Text = RT.CurrentPassphrase;
             RecipientBurstAddress.Text = "BURST-LFYZ-4FK6-X32G-FZMHF";
@@ -76,8 +80,24 @@ namespace BNWallet
                 alertDialog.SetMessage("Are you sure all the details are correct?");
                 alertDialog.SetPositiveButton("Yes", delegate
                 {
+                    double amntdbl = Convert.ToDouble(Amount.Text);
+                    amntdbl = amntdbl * 100000000;
+                    amount = amntdbl.ToString();
+
+                    double amntdblconf = Convert.ToDouble(amount);
+                    amntdblconf = amntdblconf / 100000000;
+                    Amount.Text = amntdblconf.ToString("#,0.00000000");
+
+                    double feeamnt = Convert.ToDouble(Fee.Text);
+                    feeamnt = feeamnt * 100000000;
+                    fee = feeamnt.ToString();
+
+                    double feeamntconf = Convert.ToDouble(fee);
+                    feeamntconf = feeamntconf / 100000000;
+                    Fee.Text = feeamntconf.ToString("#,0.00000000");
+
                     BNWAPI = new BNWalletAPI();
-                    GetsendMoneyResult gsmr = BNWAPI.sendMoney(RecipientBurstAddress.Text, Amount.Text+"00000000", "100000000", PassPhrase.Text, Message.Text);
+                    GetsendMoneyResult gsmr = BNWAPI.sendMoney(RecipientBurstAddress.Text, amount, fee, PassPhrase.Text, Message.Text);
                     if (gsmr.success)
                     {
                         GetTransactionResult gtr = BNWAPI.getTransaction(gsmr.transaction);
@@ -86,8 +106,7 @@ namespace BNWallet
 
                             AlertDialog.Builder ConfirmationDetailsDialog = new AlertDialog.Builder(this);
                             ConfirmationDetailsDialog.SetTitle("Confirmation Details");
-                             ConfirmationDetailsDialog.SetMessage("Sender Address: "+ gtr.senderRS +"\n" + "Amount of Burst sent: " + gtr.amountNQT.Substring(0, gtr.amountNQT.Length - 8) +
-                             "." + gtr.amountNQT.Substring(gtr.amountNQT.Length - 8) +"\n"+ "Fee: 1 Burst" + "\n" + "Recipient Address: " + gtr.recipientRS + "\n" + "Signature Hash: " + gsmr.signatureHash
+                             ConfirmationDetailsDialog.SetMessage("Sender Address: "+ gtr.senderRS +"\n" + "Amount of Burst sent: " + Amount.Text + "\n"+ "Fee: "+ Fee.Text + "\n" + "Recipient Address: " + gtr.recipientRS + "\n" + "Signature Hash: " + gsmr.signatureHash
                              + "\n" + "Transaction ID: " + gsmr.transaction + "\n" + "Block Height: " + gtr.ecBlockHeight);
 
                             ConfirmationDetailsDialog.SetPositiveButton("OK", delegate
