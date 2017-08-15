@@ -173,6 +173,7 @@
     <Compile Include="RuntimeVar.cs" />
     <Compile Include="SendBurstScreen.cs" />
     <Compile Include="SplashActivity.cs" />
+    <Compile Include="StringCipher.cs" />
     <Compile Include="UserAccountRuntime.cs" />
     <Compile Include="UserAccounts.cs" />
     <Compile Include="UserAccountsViewAdapter.cs" />

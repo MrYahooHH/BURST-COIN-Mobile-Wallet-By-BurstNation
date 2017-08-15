@@ -35,9 +35,8 @@ namespace BNWallet
 
         public UserAccountsDB()
         {
-            string dbPath = Environment.GetExternalStoragePublicDirectory(Environment.DirectoryDownloads).AbsolutePath;
-            string fileName = "UserDB.db3";
-            string dbFileName = System.IO.Path.Combine(dbPath, fileName);
+            
+            string dbFileName = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "UserDB.db3");
 
             if (System.IO.File.Exists(dbFileName))
             {

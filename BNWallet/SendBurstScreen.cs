@@ -33,7 +33,9 @@ namespace BNWallet
         string burstAddress;
         string amount;
         string fee;
-        
+        UserAccountRuntime UAR;
+        UserAccountRuntimeDB UARDB;
+
 
 
         protected override void OnCreate(Bundle savedInstanceState)
@@ -55,13 +57,16 @@ namespace BNWallet
             Message = FindViewById<EditText>(Resource.Id.sendMessage);
             Amount = FindViewById<EditText>(Resource.Id.sendAmount);
             Fee = FindViewById<EditText>(Resource.Id.sendFee);
-            PassPhrase = FindViewById<EditText>(Resource.Id.sendPassphrase);
+            
             CreateQRCode = FindViewById<Button>(Resource.Id.btnViewQRCode);
 
+            UARDB = new UserAccountRuntimeDB();
+            UAR = UARDB.Get();
+            string password = UAR.Password;
+            string SecretPhrase = StringCipher.Decrypt(RT.CurrentPassphrase, password);
+
+
             
-
-
-            PassPhrase.Text = RT.CurrentPassphrase;
             RecipientBurstAddress.Text = "BURST-LFYZ-4FK6-X32G-FZMHF";
 
             CreateQRCode.Click += delegate
@@ -97,7 +102,7 @@ namespace BNWallet
                     Fee.Text = feeamntconf.ToString("#,0.00000000");
 
                     BNWAPI = new BNWalletAPI();
-                    GetsendMoneyResult gsmr = BNWAPI.sendMoney(RecipientBurstAddress.Text, amount, fee, PassPhrase.Text, Message.Text);
+                    GetsendMoneyResult gsmr = BNWAPI.sendMoney(RecipientBurstAddress.Text, amount, fee, SecretPhrase, Message.Text);
                     if (gsmr.success)
                     {
                         GetTransactionResult gtr = BNWAPI.getTransaction(gsmr.transaction);

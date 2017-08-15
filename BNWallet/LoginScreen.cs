@@ -18,7 +18,9 @@ namespace BNWallet
         BNWalletAPI BNWAPI;
         EditText SecretPhrase;
         Toast toast;
-        
+        UserAccountRuntime UAR;
+        UserAccountRuntimeDB UARDB;
+
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -29,22 +31,19 @@ namespace BNWallet
             RuntimeVarDB RTDB = new RuntimeVarDB();
             RT = RTDB.Get();
 
-            SecretPhrase = FindViewById<EditText>(Resource.Id.PassPhrase);
-           // if(RT.CurrentPassphrase != "")
-           // {
-            SecretPhrase.Text = RT.CurrentPassphrase;
-            //}
-           // else
-           // {
-            //    SecretPhrase.Text = "";
-           // }
+            
+            UARDB = new UserAccountRuntimeDB();
+            UAR = UARDB.Get();
+            string password = UAR.Password;
+            string SecretPhrase = StringCipher.Decrypt(RT.CurrentPassphrase, password); 
+            
                 
 
             Button btnLogin = FindViewById<Button>(Resource.Id.btnLogin);
             btnLogin.Click += delegate
             {
                 BNWAPI = new BNWalletAPI();
-                GetAccountIDResult gair = BNWAPI.getAccountID(SecretPhrase.Text,"");
+                GetAccountIDResult gair = BNWAPI.getAccountID(SecretPhrase,"");
                 if(gair.success)
                 {
                     GetAccountResult gar = BNWAPI.getAccount(gair.accountRS);

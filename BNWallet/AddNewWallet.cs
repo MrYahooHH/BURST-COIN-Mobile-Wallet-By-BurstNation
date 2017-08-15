@@ -22,6 +22,8 @@ namespace BNWallet
         Toast toast;
         UserAccounts UA;
         UserAccountsDB UADB;
+        UserAccountRuntime UAR;
+        UserAccountRuntimeDB UARDB;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -30,57 +32,56 @@ namespace BNWallet
 
             etPassphrase = FindViewById<EditText>(Resource.Id.NewWalletPassPhrase);
             
+            
 
             Button Save = FindViewById<Button>(Resource.Id.btnSaveNewWallet);
             Save.Click += delegate
             {
-                //if(etConfPassword.Text != etPassword.Text)
-                //{
-                 //   toast = Toast.MakeText(this, "Passwords do not match", ToastLength.Long);
-                 //   etConfPassword.Text = "";
-                 //   toast.Show();
-               // }
-               // else
-               // {
-                    BNWAPI = new BNWalletAPI();
-                    GetAccountIDResult gair = BNWAPI.getAccountID(etPassphrase.Text, "");
-                    if (gair.success)
+                
+                BNWAPI = new BNWalletAPI();
+                GetAccountIDResult gair = BNWAPI.getAccountID(etPassphrase.Text, "");
+                if (gair.success)
+                {
+                    GetAccountResult gar = BNWAPI.getAccount(gair.accountRS);
+                    if (gar.success)
                     {
-                        GetAccountResult gar = BNWAPI.getAccount(gair.accountRS);
-                        if (gar.success)
+                        UADB = new UserAccountsDB();
+                        UA = UADB.Get(gar.name);
+                        if(UA != null)
                         {
-                            UADB = new UserAccountsDB();
-                            UA = UADB.Get(gar.name);
-                            if(UA != null)
-                           {
-                               toast = Toast.MakeText(this, "Wallet Already Exists: " + UA.AccountName, ToastLength.Long);
-                                toast.Show();
-                            }
-                            else
-                            {
-                                UA = new UserAccounts();
-                                UA.AccountName = gar.name;
-                                UA.BurstAddress = gar.accountRS;
-                                UA.PassPhrase = etPassphrase.Text;
-                                UADB.Save(UA);
-                                Intent intent = new Intent(this, typeof(WalletSelector));
-                                intent.SetFlags(ActivityFlags.SingleTop);
-                                StartActivity(intent);
-                                Finish();
-                            }
+                            toast = Toast.MakeText(this, "Wallet Already Exists: " + UA.AccountName, ToastLength.Long);
+                            toast.Show();
                         }
                         else
                         {
-                            toast = Toast.MakeText(this, "Received API Error: " + gar.errorMsg, ToastLength.Long);
-                            toast.Show();
+                            UARDB = new UserAccountRuntimeDB();
+                            UAR = UARDB.Get();
+                            string password = UAR.Password;
+                            UA = new UserAccounts();
+                            string plaintext = etPassphrase.Text;
+                            string encryptedstring = StringCipher.Encrypt(plaintext, password);
+                            UA.AccountName = gar.name;
+                            UA.BurstAddress = gar.accountRS;
+                            UA.PassPhrase = encryptedstring;
+                            UADB.Save(UA);
+                            Intent intent = new Intent(this, typeof(WalletSelector));
+                            intent.SetFlags(ActivityFlags.SingleTop);
+                            StartActivity(intent);
+                            Finish();
                         }
                     }
                     else
                     {
-                        toast = Toast.MakeText(this, "Received API Error: " + gair.errorMsg, ToastLength.Long);
+                        toast = Toast.MakeText(this, "Received API Error: " + gar.errorMsg, ToastLength.Long);
                         toast.Show();
                     }
-                //}
+                }
+                else
+                {
+                    toast = Toast.MakeText(this, "Received API Error: " + gair.errorMsg, ToastLength.Long);
+                    toast.Show();
+                }
+                
 
             };
 
