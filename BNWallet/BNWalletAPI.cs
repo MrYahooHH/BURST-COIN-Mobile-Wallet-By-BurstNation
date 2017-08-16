@@ -118,22 +118,26 @@ namespace BNWallet
 
         }
 
-        public GetsendMoneyResult sendMoney(string BurstAddress,string amountNQT,string feeNQT,string secretPhrase,string message)
+        public GetsendMoneyResult sendMoney(string BurstAddress,string amountNQT,string feeNQT,string secretPhrase,string message,bool encrypmf)
         {
             GetsendMoneyResult SMR = new GetsendMoneyResult();
             BNWalletAPIClasses.ErrorCodes er;
 
-            fp = new FormUrlEncodedContent(new[]
+            Dictionary<string, string>  fpDict = new Dictionary<string,string>()
             {
-                new KeyValuePair<string,string>("requestType","sendMoney"),
-                new KeyValuePair<string, string>("secretPhrase",secretPhrase),
-                new KeyValuePair<string, string>("recipient",BurstAddress),
-                new KeyValuePair<string, string>("amountNQT",amountNQT),
-                new KeyValuePair<string, string>("feeNQT","100000000"),
-                new KeyValuePair<string, string>("deadline","60"),
-                new KeyValuePair<string, string>("message",message)
+                { "requestType","sendMoney" },
+                { "secretPhrase",secretPhrase },
+                { "recipient",BurstAddress },
+                { "amountNQT",amountNQT },
+                { "feeNQT","100000000" },
+                { "deadline","60" }
 
-            });
+            };
+            if (encrypmf)
+                fpDict.Add("messageToEncrypt", message);
+            else
+                fpDict.Add("message", message);
+            fp = new FormUrlEncodedContent(fpDict);
 
             HttpResponseMessage resp = client.PostAsync("burst", fp).Result;
             string respStr = resp.Content.ReadAsStringAsync().Result;
@@ -162,6 +166,8 @@ namespace BNWallet
             return SMR;
 
         }
+
+        
 
         public GetTransactionResult getTransaction(string transaction)
         {

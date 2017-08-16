@@ -45,6 +45,7 @@ namespace BNWallet
                 RTDB.Save(RT);
                 Intent intent = new Intent(this, typeof(LoginScreen));
                 StartActivity(intent);
+                Finish();
             };
 
             Button AddWallet = FindViewById<Button>(Resource.Id.btnAddNewWallet);
@@ -53,6 +54,7 @@ namespace BNWallet
                 Intent intent = new Intent(this, typeof(AddNewWallet));
                 intent.SetFlags(ActivityFlags.SingleTop);
                 StartActivity(intent);
+                Finish();
             };
 
             Button btnNewUser = FindViewById<Button>(Resource.Id.btnNewUser);
@@ -61,6 +63,7 @@ namespace BNWallet
                 var uri = Android.Net.Uri.Parse("https://wallet1.burstnation.com:8125/index.html");
                 var intent = new Intent(Intent.ActionView, uri);
                 StartActivity(intent);
+                Finish();
             };
 
             // Create your application here

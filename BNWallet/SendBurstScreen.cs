@@ -30,6 +30,7 @@ namespace BNWallet
         Button buttonFlash;
         Button buttonCancelScan;
         Button CreateQRCode;
+        CheckBox cbEncrypt;
         string burstAddress;
         string amount;
         string fee;
@@ -57,6 +58,7 @@ namespace BNWallet
             Message = FindViewById<EditText>(Resource.Id.sendMessage);
             Amount = FindViewById<EditText>(Resource.Id.sendAmount);
             Fee = FindViewById<EditText>(Resource.Id.sendFee);
+            cbEncrypt = FindViewById<CheckBox>(Resource.Id.cbEncryptMessage);
             
             CreateQRCode = FindViewById<Button>(Resource.Id.btnViewQRCode);
 
@@ -67,7 +69,7 @@ namespace BNWallet
 
 
             
-            RecipientBurstAddress.Text = "BURST-LFYZ-4FK6-X32G-FZMHF";
+            
 
             CreateQRCode.Click += delegate
             {
@@ -102,7 +104,7 @@ namespace BNWallet
                     Fee.Text = feeamntconf.ToString("#,0.00000000");
 
                     BNWAPI = new BNWalletAPI();
-                    GetsendMoneyResult gsmr = BNWAPI.sendMoney(RecipientBurstAddress.Text, amount, fee, SecretPhrase, Message.Text);
+                    GetsendMoneyResult gsmr = BNWAPI.sendMoney(RecipientBurstAddress.Text, amount, fee, SecretPhrase, Message.Text,cbEncrypt.Checked);
                     if (gsmr.success)
                     {
                         GetTransactionResult gtr = BNWAPI.getTransaction(gsmr.transaction);

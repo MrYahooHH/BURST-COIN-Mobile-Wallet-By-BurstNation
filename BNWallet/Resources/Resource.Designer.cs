@@ -2892,8 +2892,8 @@ namespace BNWallet
 			// aapt resource value: 0x7f0b0028
 			public const int bottom = 2131427368;
 			
-			// aapt resource value: 0x7f0b00d6
-			public const int btnAddNewWallet = 2131427542;
+			// aapt resource value: 0x7f0b00d7
+			public const int btnAddNewWallet = 2131427543;
 			
 			// aapt resource value: 0x7f0b008a
 			public const int btnBurstRadio = 2131427466;
@@ -2910,8 +2910,8 @@ namespace BNWallet
 			// aapt resource value: 0x7f0b008f
 			public const int btnNURegister = 2131427471;
 			
-			// aapt resource value: 0x7f0b00d7
-			public const int btnNewUser = 2131427543;
+			// aapt resource value: 0x7f0b00d8
+			public const int btnNewUser = 2131427544;
 			
 			// aapt resource value: 0x7f0b00c3
 			public const int btnOK = 2131427523;
@@ -2922,8 +2922,8 @@ namespace BNWallet
 			// aapt resource value: 0x7f0b0079
 			public const int btnSaveNewWallet = 2131427449;
 			
-			// aapt resource value: 0x7f0b00d2
-			public const int btnSend = 2131427538;
+			// aapt resource value: 0x7f0b00d3
+			public const int btnSend = 2131427539;
 			
 			// aapt resource value: 0x7f0b0089
 			public const int btnSendBurst = 2131427465;
@@ -2931,8 +2931,8 @@ namespace BNWallet
 			// aapt resource value: 0x7f0b00cd
 			public const int btnSendQRCode = 2131427533;
 			
-			// aapt resource value: 0x7f0b00d1
-			public const int btnViewQRCode = 2131427537;
+			// aapt resource value: 0x7f0b00d2
+			public const int btnViewQRCode = 2131427538;
 			
 			// aapt resource value: 0x7f0b00cb
 			public const int buttonCancel = 2131427531;
@@ -2945,6 +2945,9 @@ namespace BNWallet
 			
 			// aapt resource value: 0x7f0b00ae
 			public const int cancel_action = 2131427502;
+			
+			// aapt resource value: 0x7f0b00d1
+			public const int cbEncryptMessage = 2131427537;
 			
 			// aapt resource value: 0x7f0b0030
 			public const int center = 2131427376;
@@ -2970,8 +2973,8 @@ namespace BNWallet
 			// aapt resource value: 0x7f0b0024
 			public const int collapseActionView = 2131427364;
 			
-			// aapt resource value: 0x7f0b00d8
-			public const int contentFrame = 2131427544;
+			// aapt resource value: 0x7f0b00d9
+			public const int contentFrame = 2131427545;
 			
 			// aapt resource value: 0x7f0b004e
 			public const int contentPanel = 2131427406;
@@ -3096,11 +3099,11 @@ namespace BNWallet
 			// aapt resource value: 0x7f0b0048
 			public const int list_item = 2131427400;
 			
-			// aapt resource value: 0x7f0b00d5
-			public const int lstUserAccounts = 2131427541;
+			// aapt resource value: 0x7f0b00d6
+			public const int lstUserAccounts = 2131427542;
 			
-			// aapt resource value: 0x7f0b00da
-			public const int masked = 2131427546;
+			// aapt resource value: 0x7f0b00db
+			public const int masked = 2131427547;
 			
 			// aapt resource value: 0x7f0b00b0
 			public const int media_actions = 2131427504;
@@ -3378,11 +3381,11 @@ namespace BNWallet
 			// aapt resource value: 0x7f0b00c8
 			public const int textView3 = 2131427528;
 			
-			// aapt resource value: 0x7f0b00d4
-			public const int textWalAddress = 2131427540;
+			// aapt resource value: 0x7f0b00d5
+			public const int textWalAddress = 2131427541;
 			
-			// aapt resource value: 0x7f0b00d3
-			public const int textWalName = 2131427539;
+			// aapt resource value: 0x7f0b00d4
+			public const int textWalName = 2131427540;
 			
 			// aapt resource value: 0x7f0b0085
 			public const int text_input_password_toggle = 2131427461;
@@ -3441,8 +3444,8 @@ namespace BNWallet
 			// aapt resource value: 0x7f0b000e
 			public const int view_offset_helper = 2131427342;
 			
-			// aapt resource value: 0x7f0b00d9
-			public const int visible = 2131427545;
+			// aapt resource value: 0x7f0b00da
+			public const int visible = 2131427546;
 			
 			// aapt resource value: 0x7f0b00a2
 			public const int volume_item_container = 2131427490;
