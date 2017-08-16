@@ -35,8 +35,9 @@ namespace BNWallet
 
         public UserAccountRuntimeDB()
         {
-           
-            string dbFileName = System.IO.Path.Combine(System.Environment.GetFolderPath (System.Environment.SpecialFolder.Personal), "UserDB.db3");
+
+            string dbFileName = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "UserDB.db3");
+            
 
             if (System.IO.File.Exists(dbFileName))
             {
@@ -45,7 +46,7 @@ namespace BNWallet
             else
             {
                 //If the file does not exist then create the initial table.
-                db = new SQLiteConnection(dbFileName, SQLiteOpenFlags.Create | SQLiteOpenFlags.FullMutex);
+                db = new SQLiteConnection(dbFileName);
             }
                 db.CreateTable<UserAccounts>();
                 db.CreateTable<RuntimeVar>();

@@ -60,7 +60,7 @@ namespace BNWallet
                 {
                     if (UAR.Username == Username.Text)
                     {
-                        if (UAR.Password == Password.Text)
+                        if (HashPassword.VerifyHashedPassword(UAR.Password,Password.Text))
                         {
                             Intent intent = new Intent(this, typeof(WalletSelector));
                             intent.SetFlags(ActivityFlags.SingleTop);

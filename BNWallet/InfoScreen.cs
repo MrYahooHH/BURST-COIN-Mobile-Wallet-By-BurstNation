@@ -56,6 +56,7 @@ namespace BNWallet
                 intent.SetFlags(ActivityFlags.SingleTop);
                 intent.PutExtra("BurstAddress", BurstAddress.Text);
                 StartActivity(intent);
+                Finish();
 
             };
             BurstRadio = FindViewById<Button>(Resource.Id.btnBurstRadio);

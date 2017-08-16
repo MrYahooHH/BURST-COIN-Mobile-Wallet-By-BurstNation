@@ -53,6 +53,12 @@
     <Reference Include="FormsViewGroup, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Xamarin.Forms.2.3.3.193\lib\MonoAndroid10\FormsViewGroup.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNet.Cryptography.Internal, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Cryptography.Internal.1.0.0-rc1-final\lib\dotnet5.4\Microsoft.AspNet.Cryptography.Internal.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Cryptography.KeyDerivation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Cryptography.KeyDerivation.1.0.0-rc1-final\lib\dotnet5.4\Microsoft.AspNet.Cryptography.KeyDerivation.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Mono.Android" />
     <Reference Include="mscorlib" />
@@ -164,6 +170,7 @@
     <Compile Include="AddNewWallet.cs" />
     <Compile Include="BNWalletAPI.cs" />
     <Compile Include="BNWalletAPIClasses.cs" />
+    <Compile Include="HashPassword.cs" />
     <Compile Include="InfoScreen.cs" />
     <Compile Include="LoginScreen.cs" />
     <Compile Include="MainActivity.cs" />

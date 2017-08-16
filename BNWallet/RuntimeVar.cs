@@ -34,9 +34,10 @@ namespace BNWallet
 
         public RuntimeVarDB()
         {
-           
-            
+
+
             string dbFileName = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "UserDB.db3");
+            
 
             if (System.IO.File.Exists(dbFileName))
             {

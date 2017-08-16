@@ -44,7 +44,7 @@ namespace BNWallet
                     UARDB = new UserAccountRuntimeDB();
                     UAR = new UserAccountRuntime();
                     UAR.Username = Username.Text;
-                    UAR.Password = etPassword.Text;
+                    UAR.Password = HashPassword.Hash(etPassword.Text);
                     UARDB.Save(UAR);
                     Intent intent = new Intent(this, typeof(MainActivity));
                     intent.SetFlags(ActivityFlags.SingleTop);
