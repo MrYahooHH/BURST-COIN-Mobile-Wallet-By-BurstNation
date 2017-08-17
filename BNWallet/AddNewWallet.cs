@@ -31,9 +31,8 @@ namespace BNWallet
             SetContentView(Resource.Layout.AddNewWallet);
 
             etPassphrase = FindViewById<EditText>(Resource.Id.NewWalletPassPhrase);
-            
-            
 
+            
             Button Save = FindViewById<Button>(Resource.Id.btnSaveNewWallet);
             Save.Click += delegate
             {
@@ -72,8 +71,22 @@ namespace BNWallet
                     }
                     else
                     {
-                        toast = Toast.MakeText(this, "Received API Error: " + gar.errorMsg, ToastLength.Long);
-                        toast.Show();
+                        
+                        UADB = new UserAccountsDB();
+                        UARDB = new UserAccountRuntimeDB();
+                        UAR = UARDB.Get();
+                        string password = UAR.Password;
+                        UA = new UserAccounts();
+                        string plaintext = etPassphrase.Text;
+                        string encryptedstring = StringCipher.Encrypt(plaintext, password);
+                        UA.AccountName = "Unknown Account";
+                        UA.BurstAddress = gair.accountRS;
+                        UA.PassPhrase = encryptedstring;
+                        UADB.Save(UA);
+                        Intent intent = new Intent(this, typeof(WalletSelector));
+                        intent.SetFlags(ActivityFlags.SingleTop);
+                        StartActivity(intent);
+                        Finish();
                     }
                 }
                 else
@@ -85,7 +98,10 @@ namespace BNWallet
 
             };
 
+            
+
             // Create your application here
         }
+        
     }
 }

@@ -45,7 +45,7 @@ namespace BNWallet
                 RTDB.Save(RT);
                 Intent intent = new Intent(this, typeof(LoginScreen));
                 StartActivity(intent);
-                Finish();
+                
             };
 
             Button AddWallet = FindViewById<Button>(Resource.Id.btnAddNewWallet);
@@ -60,8 +60,8 @@ namespace BNWallet
             Button btnNewUser = FindViewById<Button>(Resource.Id.btnNewUser);
             btnNewUser.Click += delegate
             {
-                var uri = Android.Net.Uri.Parse("https://wallet1.burstnation.com:8125/index.html");
-                var intent = new Intent(Intent.ActionView, uri);
+                Intent intent = new Intent(this, typeof(AddNewPassphrase));
+                intent.SetFlags(ActivityFlags.SingleTop);
                 StartActivity(intent);
                 Finish();
             };

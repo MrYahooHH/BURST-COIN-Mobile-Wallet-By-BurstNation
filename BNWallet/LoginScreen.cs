@@ -20,6 +20,8 @@ namespace BNWallet
         Toast toast;
         UserAccountRuntime UAR;
         UserAccountRuntimeDB UARDB;
+        UserAccounts UA;
+        UserAccountsDB UADB;
 
 
         protected override void OnCreate(Bundle savedInstanceState)
@@ -55,18 +57,31 @@ namespace BNWallet
                         intent.PutExtra("WalletBalance", gar.balanceNQT);
                         intent.SetFlags(ActivityFlags.SingleTop);
                         StartActivity(intent);
-                        Finish();
+                        
                     }
                     else
                     {
-                        toast = Toast.MakeText(this, "Received API Error: " + gar.errorMsg, ToastLength.Long);
-                        toast.Show();
+                        
+                        UADB = new UserAccountsDB();
+                        UA = UADB.Get(RT.CurrentWalletName);
+                        Intent intent = new Intent(this, typeof(InfoScreen));
+                        intent.PutExtra("WalletAddress", UA.BurstAddress);
+                        intent.PutExtra("WalletName", UA.AccountName);
+                        intent.PutExtra("WalletBalance", "0.00000000");
+                        intent.SetFlags(ActivityFlags.SingleTop);
+                        StartActivity(intent);
                     }
                 }
                 else
                 {
-                    toast = Toast.MakeText(this, "Received API Error: " + gair.errorMsg, ToastLength.Long);
-                    toast.Show();
+                    UADB = new UserAccountsDB();
+                    UA = UADB.Get(RT.CurrentWalletName);
+                    Intent intent = new Intent(this, typeof(InfoScreen));
+                    intent.PutExtra("WalletAddress", UA.BurstAddress);
+                    intent.PutExtra("WalletName", UA.AccountName);
+                    intent.PutExtra("WalletBalance", "0.00000000");
+                    intent.SetFlags(ActivityFlags.SingleTop);
+                    StartActivity(intent);
                 }
                 
             };

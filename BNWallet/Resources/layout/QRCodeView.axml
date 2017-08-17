@@ -26,7 +26,8 @@
         android:textColor="@android:color/background_light"
         android:gravity="center"
         android:textStyle="bold"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:textIsSelectable="true" />
     <ImageView
         android:src="@android:drawable/ic_menu_gallery"
         android:layout_width="match_parent"
