@@ -57,58 +57,65 @@ namespace BNWallet
 
             double amntdblconf = Convert.ToDouble(SentAmount);
             double FeeAmnt = Convert.ToDouble(FeeAmount);
-            double NewBBA = Convert.ToDouble(NewBB); 
-         
+            double NewBBA = Convert.ToDouble(NewBB);
+            WalletName = FindViewById<TextView>(Resource.Id.txtWalletName);
+            BurstAddress = FindViewById<TextView>(Resource.Id.txtBurstAddress);
+            BurstBalance = FindViewById<TextView>(Resource.Id.txtBalance);
 
 
             BNWAPI = new BNWalletAPI();
             GetAccountIDResult gair = BNWAPI.getAccountID(SecretPhrase, "");
-            if (gair.success)
+            try
             {
-
-                GetAccountResult gar = BNWAPI.getAccount(gair.accountRS);
-                if (gar.success)
+                if (gair.success)
                 {
 
-
-                    WalletName = FindViewById<TextView>(Resource.Id.txtWalletName);
-                    BurstAddress = FindViewById<TextView>(Resource.Id.txtBurstAddress);
-                    BurstBalance = FindViewById<TextView>(Resource.Id.txtBalance);
-
-
-                    BurstAddress.Text = gar.accountRS;
-                    WalletName.Text = gar.name;
-                    string BB;
-                    BB = gar.balanceNQT;
-                    double burstdbl = Convert.ToDouble(BB);
-                    burstdbl = burstdbl / 100000000;
-                    if (amntdblconf != 0)
+                    GetAccountResult gar = BNWAPI.getAccount(gair.accountRS);
+                    if (gar.success)
                     {
-                        if(NewBBA != 0)
+                        BurstAddress.Text = gar.accountRS;
+                        WalletName.Text = gar.name;
+                        string BB;
+                        BB = gar.balanceNQT;
+                        double burstdbl = Convert.ToDouble(BB);
+                        burstdbl = burstdbl / 100000000;
+                        if (amntdblconf != 0)
                         {
-                            double DisplayAmount;
-                            DisplayAmount = (NewBBA - (amntdblconf + FeeAmnt));
-                            BurstBalance.Text = DisplayAmount.ToString("#,0.00000000");
+                            if (NewBBA != 0)
+                            {
+                                double DisplayAmount;
+                                DisplayAmount = (NewBBA - (amntdblconf + FeeAmnt));
+                                BurstBalance.Text = DisplayAmount.ToString("#,0.00000000");
+                            }
+                            else
+                            {
+                                double DisplayAmount;
+                                DisplayAmount = (burstdbl - (amntdblconf + FeeAmnt));
+                                BurstBalance.Text = DisplayAmount.ToString("#,0.00000000");
+                            }
+
+                        }
+                        else if (BackYes == "Yes")
+                        {
+                            BurstBalance.Text = NewBB;
                         }
                         else
                         {
-                            double DisplayAmount;
-                            DisplayAmount = (burstdbl - (amntdblconf + FeeAmnt));
-                            BurstBalance.Text = DisplayAmount.ToString("#,0.00000000");
+                            BurstBalance.Text = burstdbl.ToString("#,0.00000000");
                         }
-                        
-                    }else if(BackYes == "Yes")
-                    {
-                        BurstBalance.Text = NewBB;
                     }
                     else
                     {
-                        BurstBalance.Text = burstdbl.ToString("#,0.00000000");
+                        WalletName.Text = UA.AccountName;
+                        BurstAddress.Text = UA.BurstAddress;
+                        BurstBalance.Text = balance;
                     }
-                        
-                            
-                        
                 }
+            }
+            catch
+            {
+                Toast toast = Toast.MakeText(this, "Received Error: " + gair.errorMsg, ToastLength.Long);
+                toast.Show();
             }
             btnSendBurst = FindViewById<Button>(Resource.Id.btnSendBurst);
             btnSendBurst.Click += delegate

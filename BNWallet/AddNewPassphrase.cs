@@ -47,30 +47,44 @@ namespace BNWallet
             {
 
                 BNWAPI = new BNWalletAPI();
-                GetAccountIDResult gair = BNWAPI.getAccountID(etPassphrase.Text, "");
-                if (gair.success)
+                try
                 {
-                    
-                    UADB = new UserAccountsDB();
-                    UARDB = new UserAccountRuntimeDB();
-                    UAR = UARDB.Get();
-                    string password = UAR.Password;
-                    UA = new UserAccounts();
-                    string plaintext = etPassphrase.Text;
-                    string encryptedstring = StringCipher.Encrypt(plaintext, password);
-                    UA.AccountName = "Unknown Account";
-                    UA.BurstAddress = gair.accountRS;
-                    UA.PassPhrase = encryptedstring;
-                    UADB.Save(UA);
-                    Intent intent = new Intent(this, typeof(WalletSelector));
-                    intent.SetFlags(ActivityFlags.SingleTop);
-                    StartActivity(intent);
-                    Finish();
-                   
+                    GetAccountIDResult gair = BNWAPI.getAccountID(etPassphrase.Text, "");
+                
+                    if (gair.success)
+                    {
+
+                        UADB = new UserAccountsDB();
+                        UARDB = new UserAccountRuntimeDB();
+                        UAR = UARDB.Get();
+                        string password = UAR.Password;
+                        UA = new UserAccounts();
+                        string plaintext = etPassphrase.Text;
+                        string encryptedstring = StringCipher.Encrypt(plaintext, password);
+                        UA.AccountName = "Unknown Account";
+                        UA.BurstAddress = gair.accountRS;
+                        UA.PassPhrase = encryptedstring;
+                        UADB.Save(UA);
+                        Intent intent = new Intent(this, typeof(WalletSelector));
+                        intent.SetFlags(ActivityFlags.SingleTop);
+                        StartActivity(intent);
+                        Finish();
 
 
 
-                };
+
+                    }
+                    else
+                    {
+                        Toast toast = Toast.MakeText(this, "Received Error: " + gair.errorMsg, ToastLength.Long);
+                        toast.Show();
+                    }
+                }
+                catch(Exception e)
+                {
+                    Toast toast = Toast.MakeText(this, "Received Exception Error: " +e.Message, ToastLength.Long);
+                    toast.Show();
+                }
 
 
 

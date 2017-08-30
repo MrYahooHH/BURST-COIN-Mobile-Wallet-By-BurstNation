@@ -11,6 +11,7 @@ using Android.Views;
 using Android.Widget;
 using Newtonsoft.Json;
 using System.Net.Http;
+
 using System.Net.Http.Headers;
 
 namespace BNWallet
@@ -54,17 +55,33 @@ namespace BNWallet
             {
                 if (respStr.Contains("\"errorCode\":"))
                 {
-                    er = JsonConvert.DeserializeObject<BNWalletAPIClasses.ErrorCodes>(respStr);
-                    GAIR.success = false;
-                    GAIR.errorMsg = er.errorDescription;
+                    try
+                    {
+                        er = JsonConvert.DeserializeObject<BNWalletAPIClasses.ErrorCodes>(respStr);
+                        GAIR.success = false;
+                        GAIR.errorMsg = er.errorDescription;
+                    }
+                    catch (Exception e)
+                    {
+                        GAIR.success = false;
+                        GAIR.errorMsg = "Exception Error Deserializing Error Code: " + e.Message;
+                    }
                     //GAIR.errorMsg = fp;
                 }
                 else
                 {
-                    BNWalletAPIClasses.GetAccountIDResponse gair = JsonConvert.DeserializeObject<BNWalletAPIClasses.GetAccountIDResponse>(respStr);
-                    GAIR.success = true;
-                    GAIR.accountRS = gair.accountRS;
-                    GAIR.account = gair.account;
+                    try
+                    {
+                        BNWalletAPIClasses.GetAccountIDResponse gair = JsonConvert.DeserializeObject<BNWalletAPIClasses.GetAccountIDResponse>(respStr);
+                        GAIR.success = true;
+                        GAIR.accountRS = gair.accountRS;
+                        GAIR.account = gair.account;
+                    }
+                    catch (Exception e)
+                    {
+                        GAIR.success = false;
+                        GAIR.errorMsg = "Exception Error Deserializing GetAccountIDResponse: " + e.Message;
+                    }
                 }
             }
             else

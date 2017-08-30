@@ -47,10 +47,12 @@ namespace BNWallet
             {
                 //If the file does not exist then create the initial table.
                 db = new SQLiteConnection(dbFileName);
-                db.CreateTable<UserAccounts>();
-                db.CreateTable<RuntimeVar>();
-
+                
             }
+            db.CreateTable<UserAccounts>();
+            db.CreateTable<RuntimeVar>();
+            db.CreateTable<UserAccountRuntime>();
+
         }
 
         public UserAccounts Get(string AccountName)

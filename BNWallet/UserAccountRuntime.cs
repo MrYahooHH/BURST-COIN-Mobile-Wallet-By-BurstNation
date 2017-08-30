@@ -41,18 +41,21 @@ namespace BNWallet
 
             if (System.IO.File.Exists(dbFileName))
             {
-                db = new SQLiteConnection(dbFileName, SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.FullMutex);
+                db = new SQLiteConnection(dbFileName);
+               
             }
             else
             {
                 //If the file does not exist then create the initial table.
                 db = new SQLiteConnection(dbFileName);
-            }
                 db.CreateTable<UserAccounts>();
                 db.CreateTable<RuntimeVar>();
                 db.CreateTable<UserAccountRuntime>();
 
+            }
             
+
+
         }
 
         public UserAccountRuntime Get()
