@@ -49,9 +49,9 @@ namespace BNWallet
                 db = new SQLiteConnection(dbFileName);
                 
             }
-            db.CreateTable<UserAccounts>();
-            db.CreateTable<RuntimeVar>();
-            db.CreateTable<UserAccountRuntime>();
+            //db.CreateTable<UserAccounts>();
+           // db.CreateTable<RuntimeVar>();
+           // db.CreateTable<UserAccountRuntime>();
 
         }
 
